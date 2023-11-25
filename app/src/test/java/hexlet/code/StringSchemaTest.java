@@ -3,8 +3,11 @@ package hexlet.code;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StringSchemaTest {
+    public static final int FIVE_LENGTH = 5;
+    public static final int FOUR_LENGTH = 4;
     @Test
     public void isValidTest1() {
         Validator validator = new Validator();
@@ -25,17 +28,15 @@ public class StringSchemaTest {
     public void isValidTest3() {
         Validator validator = new Validator();
         StringSchema schema = validator.string();
-        int minLength = 5;
-        boolean result = schema.required().minLength(minLength).isValid("Hello");
-        assertThat(result).isEqualTo(true);
+        boolean result = schema.required().minLength(FIVE_LENGTH).isValid("Hello");
+        assertTrue(result);
     }
 
     @Test
     public void isValidTest4() {
         Validator validator = new Validator();
         StringSchema schema = validator.string();
-        int minLength = 4;
-        boolean result = schema.required().minLength(minLength).isValid("Hel");
+        boolean result = schema.required().minLength(FOUR_LENGTH).isValid("Hel");
         assertThat(result).isEqualTo(false);
     }
 
@@ -43,8 +44,7 @@ public class StringSchemaTest {
     public void isValidTest5() {
         Validator validator = new Validator();
         StringSchema schema = validator.string();
-        int minLength = 5;
-        boolean result = schema.required().minLength(minLength).contains("what").isValid("what does the fox say");
+        boolean result = schema.required().minLength(FIVE_LENGTH).contains("what").isValid("what does the fox say");
         assertThat(result).isEqualTo(true);
     }
 
@@ -52,8 +52,7 @@ public class StringSchemaTest {
     public void isValidTest6() {
         Validator validator = new Validator();
         StringSchema schema = validator.string();
-        int minLength = 5;
-        boolean result = schema.required().minLength(minLength).contains("whatthe").isValid("what does the fox say");
+        boolean result = schema.required().minLength(FIVE_LENGTH).contains("whatthe").isValid("what does the fox say");
         assertThat(result).isEqualTo(false);
     }
 }

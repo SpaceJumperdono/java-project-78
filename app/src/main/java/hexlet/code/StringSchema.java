@@ -1,39 +1,25 @@
 package hexlet.code;
 
-public class StringSchema {
-    private boolean requiredFlag = false;
-    private int length = 0;
-    private String substring;
+import java.util.function.Predicate;
+
+public class StringSchema extends BaseSchema {
 
     public final StringSchema required() {
-        requiredFlag = true;
+        Predicate<?> requiredPredicate = o -> o instanceof String && !o.equals("");
+        super.addPredicate(requiredPredicate);
         return this;
     }
 
     public final StringSchema minLength(int minLength) {
-        if (minLength <= 0) {
-            throw new RuntimeException();
-        }
-        this.length = minLength;
+        Predicate<String> minLengthPredicate = s -> s.length() >= minLength;
+        super.addPredicate(minLengthPredicate);
         return this;
     }
 
-    public final StringSchema contains(String contains) {
-        this.substring = contains;
+    public final StringSchema contains(String substring) {
+        Predicate<String> containsPredicate = s -> s.contains(substring);
+        super.addPredicate(containsPredicate);
         return this;
     }
-    public final boolean isValid(Object object) {
-        boolean validation = false;
-        if (requiredFlag && object instanceof String) {
-            String objectString = object.toString();
-            if (objectString.length() >= length && substring == null) {
-                validation = true;
-            } else if (objectString.length() >= length && objectString.contains(substring)) {
-                validation = true;
-            }
-        } else if (!requiredFlag) {
-            validation = true;
-        }
-        return validation;
-    }
+
 }
