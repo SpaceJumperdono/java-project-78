@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NumberSchemaTest {
+    public static final int MINUS_TEN = -10;
+    public static final int TEN = 10;
     @Test
     public void numberSchemaTest1() {
         Validator validator = new Validator();
@@ -25,7 +27,7 @@ public class NumberSchemaTest {
     public void numberSchemaTest3() {
         Validator validator = new Validator();
         NumberSchema schema = validator.number();
-        boolean result = schema.positive().isValid(null);
+        boolean result = schema.positive().range(MINUS_TEN, TEN).isValid(TEN);
         assertThat(result).isEqualTo(true);
     }
 
@@ -44,7 +46,7 @@ public class NumberSchemaTest {
         NumberSchema schema = validator.number();
         schema.required();
         schema.positive();
-        boolean result = schema.isValid(-10);
+        boolean result = schema.isValid(MINUS_TEN);
         assertThat(result).isEqualTo(false);
     }
 
@@ -54,7 +56,7 @@ public class NumberSchemaTest {
         NumberSchema schema = validator.number();
         schema.required();
         schema.positive();
-        boolean result = schema.isValid(10);
+        boolean result = schema.isValid(TEN);
         assertThat(result).isEqualTo(true);
     }
 

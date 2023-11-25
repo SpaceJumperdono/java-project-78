@@ -12,11 +12,11 @@ public class BaseSchema {
 //        addPredicate(requiredPredicate);
 //        return this;
 //    }
-    public void addPredicate(Predicate newPredicate) {
+    public final void addPredicate(Predicate newPredicate) {
         predicates.add(newPredicate);
     }
 
-    public <T> boolean isValid(T t) {
+    public final <T> boolean isValid(T t) {
         for (Predicate predicate : predicates) {
             if (!predicate.test(t)) {
                 return false;
