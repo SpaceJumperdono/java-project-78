@@ -11,25 +11,13 @@ public class NumberSchema extends BaseSchema {
     }
 
     public final NumberSchema positive() {
-        Predicate<Integer> positivePredicate = i -> {
-            try {
-                return i > 0;
-            } catch (Exception e) {
-                return true;
-            }
-        };
+        Predicate<Integer> positivePredicate = i -> i > 0;
         super.addPredicate(positivePredicate);
         return this;
     }
 
     public final NumberSchema range(int number1, int number2) {
-        Predicate<Integer> rangePredicate = i -> {
-            try {
-                return i >= number1 && i <= number2;
-            } catch (Exception e) {
-                return true;
-            }
-        };
+        Predicate<Integer> rangePredicate = i -> i >= number1 && i <= number2;
         super.addPredicate(rangePredicate);
         return this;
     }

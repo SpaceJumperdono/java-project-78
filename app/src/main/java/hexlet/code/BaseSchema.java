@@ -7,18 +7,23 @@ import java.util.function.Predicate;
 public class BaseSchema {
     private List<Predicate> predicates = new ArrayList<>();
 
-//    public final BaseSchema required() {
-//        Predicate<?> requiredPredicate = (__) -> true;
-//        addPredicate(requiredPredicate);
-//        return this;
-//    }
+    public final <T> Predicate<T> wrapWithCatch(Predicate<T> original) {
+        Predicate<T> wrapPredicate = it -> {
+            try {
+                return original.test(it);
+            } catch (Exception e) {
+                return true;
+            }
+        };
+        return wrapPredicate;
+    }
     public final void addPredicate(Predicate newPredicate) {
         predicates.add(newPredicate);
     }
 
     public final <T> boolean isValid(T t) {
         for (Predicate predicate : predicates) {
-            if (!predicate.test(t)) {
+            if (!wrapWithCatch(predicate).test(t)) {
                 return false;
             }
         }
