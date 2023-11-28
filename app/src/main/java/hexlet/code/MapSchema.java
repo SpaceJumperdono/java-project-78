@@ -1,12 +1,10 @@
 package hexlet.code;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public class MapSchema extends BaseSchema {
 
-    private Map<String, BaseSchema> schemas = new HashMap<>();
     public final MapSchema required() {
         Predicate<?> requiredPredicate = o -> o instanceof Map;
         super.addPredicate(requiredPredicate);

@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MapSchemaTest {
     public static final int SIZE_TWO = 2;
+    public static final int HUNDRED = 100;
+    public static final int MINUS_FIVE = -5;
 
     @Test
     public void mapSchemaTest1() {
@@ -64,7 +65,7 @@ public class MapSchemaTest {
         Map<String, BaseSchema> schemas = Map.of("name", validator.string().required(),
                 "age", validator.number().positive());
         schema.shape(schemas);
-        Map<String, Object> map = Map.of("name", "Kolya", "age", 100);
+        Map<String, Object> map = Map.of("name", "Kolya", "age", HUNDRED);
         boolean result = schema.isValid(map);
         assertThat(result).isEqualTo(true);
     }
@@ -104,7 +105,7 @@ public class MapSchemaTest {
         Map<String, BaseSchema> schemas = Map.of("name", validator.string().required(),
                 "age", validator.number().positive());
         schema.shape(schemas);
-        Map<String, Object> map = Map.of("name", "Valya", "age", -5);
+        Map<String, Object> map = Map.of("name", "Valya", "age", MINUS_FIVE);
         boolean result = schema.isValid(map);
         assertThat(result).isEqualTo(false);
     }
