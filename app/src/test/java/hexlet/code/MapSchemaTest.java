@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MapSchemaTest {
@@ -56,4 +57,55 @@ public class MapSchemaTest {
         assertThat(result).isEqualTo(true);
     }
 
+    @Test
+    public void mapSchemaTest6() {
+        Validator validator = new Validator();
+        MapSchema schema = validator.map();
+        Map<String, BaseSchema> schemas = Map.of("name", validator.string().required(),
+                "age", validator.number().positive());
+        schema.shape(schemas);
+        Map<String, Object> map = Map.of("name", "Kolya", "age", 100);
+        boolean result = schema.isValid(map);
+        assertThat(result).isEqualTo(true);
+    }
+
+    @Test
+    public void mapSchemaTest7() {
+        Validator validator = new Validator();
+        MapSchema schema = validator.map();
+        Map<String, BaseSchema> schemas = Map.of("name", validator.string().required(),
+                "age", validator.number().positive());
+        schema.shape(schemas);
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "Maya");
+        map.put("age", null);
+        boolean result = schema.isValid(map);
+        assertThat(result).isEqualTo(true);
+    }
+
+    @Test
+    public void mapSchemaTest8() {
+        Validator validator = new Validator();
+        MapSchema schema = validator.map();
+        Map<String, BaseSchema> schemas = Map.of("name", validator.string().required(),
+                "age", validator.number().positive());
+        schema.shape(schemas);
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "");
+        map.put("age", null);
+        boolean result = schema.isValid(map);
+        assertThat(result).isEqualTo(false);
+    }
+
+    @Test
+    public void mapSchemaTest9() {
+        Validator validator = new Validator();
+        MapSchema schema = validator.map();
+        Map<String, BaseSchema> schemas = Map.of("name", validator.string().required(),
+                "age", validator.number().positive());
+        schema.shape(schemas);
+        Map<String, Object> map = Map.of("name", "Valya", "age", -5);
+        boolean result = schema.isValid(map);
+        assertThat(result).isEqualTo(false);
+    }
 }
