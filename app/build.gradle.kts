@@ -8,6 +8,7 @@ plugins {
     id("io.freefair.lombok") version "8.4"
     id("com.github.ben-manes.versions") version "0.49.0"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.github.mrsarm.jshell.plugin") version "1.2.1"
 }
 
 group = "io.hexlet"
