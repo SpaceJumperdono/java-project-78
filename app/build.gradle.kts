@@ -10,7 +10,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-group = "io.hexlet"
+group = "hexlet.code"
 version = "1.0-SNAPSHOT"
 
 application { mainClass.set("hexlet.code.App") }
