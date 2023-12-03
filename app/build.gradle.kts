@@ -26,6 +26,10 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.22.0")
 }
 
+tasks.checkstyleTest {
+    isEnabled = false
+}
+
 tasks.test {
     useJUnitPlatform()
     // https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/

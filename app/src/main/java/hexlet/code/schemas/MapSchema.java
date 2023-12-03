@@ -1,19 +1,24 @@
 package hexlet.code.schemas;
 
+
 import java.util.Map;
 import java.util.function.Predicate;
 
 public class MapSchema extends BaseSchema {
 
-    public final MapSchema required() {
+    public MapSchema() {
         Predicate<?> requiredPredicate = o -> o instanceof Map;
-        super.addPredicate(requiredPredicate);
+        super.putPredicate("required", requiredPredicate);
+    }
+
+    public final MapSchema required() {
+        super.changeRequired();
         return this;
     }
 
     public final MapSchema sizeof(int size) {
         Predicate<Map<?, ?>> sizeofPredicate = map -> map.size() == size;
-        super.addPredicate(sizeofPredicate);
+        super.putPredicate("sizeof", sizeofPredicate);
         return this;
     }
 
@@ -30,7 +35,7 @@ public class MapSchema extends BaseSchema {
             }
             return true;
         };
-        super.addPredicate(shapePredicate);
+        super.putPredicate("shape", shapePredicate);
         return this;
     }
 }

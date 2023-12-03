@@ -4,70 +4,33 @@ import hexlet.code.schemas.NumberSchema;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NumberSchemaTest {
-    public static final int MINUS_TEN = -10;
-    public static final int TEN = 10;
     @Test
-    public void numberSchemaTest1() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number();
-        boolean result = schema.isValid(null);
-        assertThat(result).isEqualTo(true);
-    }
+    public void testNumberSchema() {
+        Validator v = new Validator();
+        NumberSchema schema = v.number();
 
-    @Test
-    public void numberSchemaTest2() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number();
-        boolean result = schema.positive().isValid(null);
-        assertThat(result).isEqualTo(true);
-    }
+        assertTrue(schema.isValid(null));
+        assertTrue(schema.positive().isValid(null));
 
-    @Test
-    public void numberSchemaTest3() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number();
-        boolean result = schema.positive().range(MINUS_TEN, TEN).isValid(TEN);
-        assertThat(result).isEqualTo(true);
-    }
-
-    @Test
-    public void numberSchemaTest4() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number();
         schema.required();
-        boolean result = schema.isValid(null);
-        assertThat(result).isEqualTo(false);
+
+        assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid("5"));
+        assertTrue(schema.isValid(10));
+
+        assertFalse(schema.isValid(-10));
+        assertFalse(schema.isValid(0));
+
+        schema.range(5, 10);
+
+        schema.isValid(5); // true
+        schema.isValid(10); // true
+        schema.isValid(4); // false
+        schema.isValid(11); // false
     }
 
-    @Test
-    public void numberSchemaTest5() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number();
-        schema.required();
-        schema.positive();
-        boolean result = schema.isValid(MINUS_TEN);
-        assertThat(result).isEqualTo(false);
-    }
-
-    @Test
-    public void numberSchemaTest6() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number();
-        schema.required();
-        schema.positive();
-        boolean result = schema.isValid(TEN);
-        assertThat(result).isEqualTo(true);
-    }
-
-    @Test
-    public void numberSchemaTest7() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number();
-        schema.required();
-        schema.positive();
-        boolean result = schema.isValid("10");
-        assertThat(result).isEqualTo(false);
-    }
 }

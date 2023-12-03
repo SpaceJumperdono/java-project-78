@@ -1,32 +1,32 @@
 package hexlet.code.schemas;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class BaseSchema {
-    private List<Predicate> predicates = new ArrayList<>();
+    private boolean checkRequired = false;
+    private Map<String, Predicate<Object>> predicates = new LinkedHashMap<>();
 
-    public final <T> Predicate<T> wrapWithCatch(Predicate<T> original) {
-        Predicate<T> wrapPredicate = it -> {
-            try {
-                return original.test(it);
-            } catch (Exception e) {
-                return true;
-            }
-        };
-        return wrapPredicate;
+    public final void changeRequired() {
+        checkRequired = true;
     }
-    public final void addPredicate(Predicate newPredicate) {
-        predicates.add(newPredicate);
+    public final void putPredicate(String name, Predicate newPredicate) {
+        predicates.put(name, newPredicate);
     }
 
-    public final <T> boolean isValid(T t) {
-        for (Predicate predicate : predicates) {
-            if (!wrapWithCatch(predicate).test(t)) {
+    public final boolean isValid(Object object) {
+        boolean requiredPredicate = predicates.get("required").test(object);
+        if (!checkRequired && !requiredPredicate) {
+            return true;
+        }
+        for (Map.Entry<String, Predicate<Object>> elementOfPredicates : predicates.entrySet()) {
+            if (!elementOfPredicates.getValue().test(object)) {
                 return false;
             }
         }
         return true;
     }
 }
+
+// s.positive().isValid(null);
