@@ -20,12 +20,8 @@ public class BaseSchema {
         if (!checkRequired && !requiredPredicate) {
             return true;
         }
-        for (Map.Entry<String, Predicate<Object>> elementOfPredicates : predicates.entrySet()) {
-            if (!elementOfPredicates.getValue().test(object)) {
-                return false;
-            }
-        }
-        return true;
+        return predicates.values().stream()
+                .allMatch(valueOfElement -> valueOfElement.test(object));
     }
 }
 

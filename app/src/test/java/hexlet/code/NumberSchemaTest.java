@@ -25,10 +25,10 @@ public class NumberSchemaTest {
 
         schema.range(5, 10);
 
-        schema.isValid(5); // true
-        schema.isValid(10); // true
-        schema.isValid(4); // false
-        schema.isValid(11); // false
+        assertTrue(schema.isValid(5));
+        assertTrue(schema.isValid(10));
+        assertFalse(schema.isValid(4));
+        assertFalse(schema.isValid(11));
     }
 
 }
