@@ -16,13 +16,10 @@ public class BaseSchema {
     }
 
     public final boolean isValid(Object object) {
-        boolean requiredPredicate = predicates.get("required").test(object);
-        if (!checkRequired && !requiredPredicate) {
+        if (!checkRequired && !predicates.get("required").test(object)) {
             return true;
         }
         return predicates.values().stream()
                 .allMatch(valueOfElement -> valueOfElement.test(object));
     }
 }
-
-// s.positive().isValid(null);
