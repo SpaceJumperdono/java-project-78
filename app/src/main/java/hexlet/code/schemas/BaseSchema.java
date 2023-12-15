@@ -11,7 +11,7 @@ public class BaseSchema {
     public final void changeRequired() {
         checkRequired = true;
     }
-    public final <T> void putPredicate(String name, Predicate<Object> newPredicate) {
+    public final void putPredicate(String name, Predicate<Object> newPredicate) {
         predicates.put(name, newPredicate);
     }
 
