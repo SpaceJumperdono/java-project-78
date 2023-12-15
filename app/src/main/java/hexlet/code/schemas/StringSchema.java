@@ -12,12 +12,12 @@ public class StringSchema extends BaseSchema {
     }
 
     public final StringSchema minLength(int minLength) {
-        this.<String>putPredicate("minLength", s -> s.length() >= minLength);
+        putPredicate("minLength", s -> ((String) s).length() >= minLength);
         return this;
     }
 
     public final StringSchema contains(String substring) {
-        this.<String>putPredicate("contains", s -> s.contains(substring));
+        putPredicate("contains", s -> ((String) s).contains(substring));
         return this;
     }
 

@@ -15,14 +15,14 @@ public class MapSchema extends BaseSchema {
     }
 
     public final MapSchema sizeof(int size) {
-        this.<Map<?, ?>>putPredicate("sizeof", map -> map.size() == size);
+        putPredicate("sizeof", map -> ((Map<?, ?>) map).size() == size);
         return this;
     }
 
     public final MapSchema shape(Map<String, BaseSchema> schemas) {
-        Predicate<Map<?, ?>> shapePredicate = checkedData -> schemas.entrySet().stream()
-                .filter(schema -> checkedData.containsKey(schema.getKey()))
-                .allMatch(schema -> schema.getValue().isValid(checkedData.get(schema.getKey())));
+        Predicate<Object> shapePredicate = checkedData -> schemas.entrySet().stream()
+                .filter(schema -> ((Map<?, ?>) checkedData).containsKey(schema.getKey()))
+                .allMatch(schema -> schema.getValue().isValid(((Map<?, ?>) checkedData).get(schema.getKey())));
         putPredicate("shape", shapePredicate);
         return this;
     }

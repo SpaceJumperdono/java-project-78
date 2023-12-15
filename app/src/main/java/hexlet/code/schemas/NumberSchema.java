@@ -12,12 +12,12 @@ public class NumberSchema extends BaseSchema {
     }
 
     public final NumberSchema positive() {
-        this.<Integer>putPredicate("positive", i -> i > 0);
+        putPredicate("positive", i -> (Integer) i > 0);
         return this;
     }
 
     public final NumberSchema range(int number1, int number2) {
-        this.<Integer>putPredicate("range", i -> i >= number1 && i <= number2);
+        putPredicate("range", i -> (Integer) i >= number1 && (Integer) i <= number2);
         return this;
     }
 }
